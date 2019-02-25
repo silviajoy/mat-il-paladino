@@ -15,3 +15,19 @@ export const newDBElement = (element:any) => {
 
 }
 
+export const newUser = (user:any) => {
+    const db = admin.firestore();
+    const userRef = db.collection('users').doc(`${user.userId}`);
+    const pantryRef = db.collection('pantries').doc(`${user.pantryId}`);
+
+    pantryRef.set({pantryId: user.pantryId})
+    
+    const setUser = userRef.set({
+        userId: user.userId,
+        pantry: pantryRef
+    })
+    
+    return setUser
+
+}
+
