@@ -1,9 +1,33 @@
+
+import { newDBElement } from '../repository';
+import uuidv1 from 'uuid/v1'
 import moment from 'moment'
 import 'moment/locale/it'
 
 moment.locale('it')
 
+const generateUUID = () => {
+    return uuidv1()
+}
+
 const elementoComprato = (conv:any, parameters:any) => {
+    let userId
+
+    if ('userId' in conv.user.storage) {
+        userId = conv.user.storage.userId;
+    } else {
+        // generateUUID is your function to generate ids.
+        userId = generateUUID();
+        console.log(userId)
+        conv.user.storage.userId = userId
+    }
+    console.log(conv.user.storage)
+
+    const test = {
+        userId: conv.user._id,
+    }
+    console.log(newDBElement(test))
+
     const stringed = JSON.stringify(parameters)
     const parsedParams = JSON.parse(stringed)
     const anyTerms = new RegExp('ho comprato|ho preso|aggiungi|ho acquistato|metti|archivia|ho fatto la spesa|\sscade|\sscadenza')
