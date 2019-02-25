@@ -6,23 +6,35 @@ moment.locale('it')
 const elementoComprato = (conv:any, parameters:any) => {
     const stringed = JSON.stringify(parameters)
     const parsedParams = JSON.parse(stringed)
+    const anyTerms = new RegExp('ho comprato|ho preso|aggiungi|ho acquistato|metti|archivia|ho fatto la spesa|\sscade|\sscadenza')
+    let quantity = ''
+    let expDate = ''
     let date = parsedParams.expDate
     let qty = parsedParams.quantity
     let any = parsedParams.any
-    if(qty) {
-        let quantity = `${qty.number} ${qty.udm}`
-        console.log(quantity)
-    }
-    if (date) {
-        let expDate
-        if (typeof date == 'string') {
-            expDate = moment(date).format('LL')
-        }else{
-            expDate = moment(date.date.startDate).format('LL')
+    if ( anyTerms.test(any) || any =='' ){
+        console.log("any")
+        conv.ask(`Non ho capito, cosa hai comprato?`)
+    } else {
+        if(qty) {
+            if(qty.number) {
+                quantity += `${qty.number} `
+            }
+            if(qty.udm) {
+                quantity += `${qty.udm}`
+            }
+            console.log(quantity)
         }
-        console.log(expDate)
+        if (date) {
+            if (typeof date == 'string') {
+                expDate = moment(date).format('LL')
+            }else{
+                expDate = moment(date.date.startDate).format('LL')
+            }
+            console.log(expDate)
+        }
+        conv.ask(`Ok, ho aggiunto ${quantity} di ${any} che scade il ${expDate}`)
     }
-    conv.ask(`Ok, ho aggiunto ${qty} di ${any} che scade il ${date}`)
 }
 
 export default elementoComprato
