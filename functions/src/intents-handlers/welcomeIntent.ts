@@ -12,24 +12,24 @@ const welcomeIntent = (conv:any, parameters:any) => {
 
     if ('userId' in conv.user.storage) {
         userId = conv.user.storage.userId;
-        conv.user.storage = {}
+        conv.ask("Ciao! Cosa posso fare per te?")
+        //conv.user.storage = {}
     } else {
         userId = 'user-'+generateUUID();
         pantryId = 'pantry-'+generateUUID();
-        console.log(userId)
         conv.user.storage.userId = userId
-        const test = {
+        const user = {
             userId: userId,
             pantryId: pantryId
         }
-        console.log(newUser(test))
+        return newUser(user).then(()=>{
+            conv.ask("La tua dispensa virtuale è pronta! Possiamo iniziare aggiungendo elementi. Dimmi pure cosa hai in dispensa e quando scade. Un elemento alla volta.")        
+        }).catch((error) => error)
     }
-    console.log(userId)
-    console.log(conv.user.storage)
 
     
 
-    conv.ask("Ciao! Cosa posso fare per te?")
+    
 }
 
 export default welcomeIntent

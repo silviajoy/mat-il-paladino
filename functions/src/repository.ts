@@ -20,7 +20,7 @@ export const newUser = (user:any) => {
     const userRef = db.collection('users').doc(`${user.userId}`);
     const pantryRef = db.collection('pantries').doc(`${user.pantryId}`);
 
-    pantryRef.set({pantryId: user.pantryId})
+    pantryRef.set({pantryId: user.pantryId}).then(() => 'ok').catch((error) => error)
     
     const setUser = userRef.set({
         userId: user.userId,
