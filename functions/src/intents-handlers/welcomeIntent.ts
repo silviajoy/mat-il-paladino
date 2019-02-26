@@ -18,13 +18,14 @@ const welcomeIntent = (conv:any, parameters:any) => {
         userId = 'user-'+generateUUID();
         pantryId = 'pantry-'+generateUUID();
         conv.user.storage.userId = userId
+        conv.user.storage.pantryId = pantryId
         const user = {
             userId: userId,
             pantryId: pantryId
         }
         return newUser(user).then(()=>{
             conv.ask("La tua dispensa virtuale è pronta! Possiamo iniziare aggiungendo elementi. Dimmi pure cosa hai in dispensa e quando scade. Un elemento alla volta.")        
-        }).catch((error) => error)
+        }).catch((error:any) => error)
     }
 
     
