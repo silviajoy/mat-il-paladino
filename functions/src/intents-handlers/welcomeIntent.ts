@@ -24,7 +24,7 @@ const welcomeIntent = (conv:any, parameters:any) => {
             pantryId: pantryId
         }
         return newUser(user).then(()=>{
-            conv.ask("La tua dispensa virtuale è pronta! Possiamo iniziare aggiungendo elementi. Dimmi pure cosa hai in dispensa e quando scade. Un elemento alla volta.")        
+            conv.ask("La tua dispensa virtuale è pronta! Possiamo iniziare aggiungendo elementi. Puoi dirmi cosa hai in dispensa e quando scade. Un elemento alla volta.")        
         }).catch((error:any) => error)
     }
 
