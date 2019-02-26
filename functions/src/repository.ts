@@ -8,10 +8,10 @@ export const initializeDB = () => {
 }
 
 export const newDBElement = (element:any) => {
-    const db = admin.firestore();
-    const docRef = db.collection('users').doc(`${element.userId}`);
+    //const db = admin.firestore();
+    //const pantryRef = db.collection('users').doc(`${element.userId}`);
     
-    return docRef
+    return true
 
 }
 

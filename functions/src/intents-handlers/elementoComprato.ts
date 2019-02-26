@@ -30,7 +30,7 @@ const elementoComprato = (conv:any, parameters:any) => {
 
     const stringed = JSON.stringify(parameters)
     const parsedParams = JSON.parse(stringed)
-    const anyTerms = new RegExp('ho comprato|ho preso|aggiungi|ho acquistato|metti|archivia|ho fatto la spesa|\sscade|\sscadenza')
+    const anyTerms = new RegExp('|alla dispensa|ho comprato|ho preso|aggiungi|ho acquistato|metti|archivia|inserisci|ho fatto la spesa|\sscade|\sscadenza')
     let quantity = ''
     let expDate = ''
     let date = parsedParams.expDate
@@ -50,14 +50,14 @@ const elementoComprato = (conv:any, parameters:any) => {
             console.log(quantity)
         }
         if (date) {
-            if (typeof date == 'string') {
-                expDate = moment(date).format('LL')
+            if (typeof date.date == 'string') {
+                expDate = moment(date.date).format('LL')
             }else{
                 expDate = moment(date.date.startDate).format('LL')
             }
             console.log(expDate)
         }
-        conv.ask(`Ok, ho aggiunto ${quantity} di ${any} che scade il ${expDate}`)
+        conv.ask(`Quantità: ${quantity}, cibo: ${any}, scadenza ${expDate}`)
     }
 }
 
