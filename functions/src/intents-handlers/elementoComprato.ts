@@ -26,7 +26,7 @@ const elementoComprato = (conv:any, parameters:any) => {
 
         let newPantryElement:any = {}
         let quantity:string = ''
-        let expDateString:string = ''
+        //let expDateString:string = ''
         let expDate:Date
         
 
@@ -63,19 +63,16 @@ const elementoComprato = (conv:any, parameters:any) => {
                 if (typeof expDateIn.date == 'string') {
                     //aggiorno il valore di expDate locale
                     expDate = expDateIn.date
-                    expDateString = moment(expDateIn.date).format('LL')
+                    //expDateString = moment(expDateIn.date).format('LL')
                 //Altrimenti è un periodo
                 }else{
                     //aggiorno il valore di expDate locale
                     expDate = expDateIn.date.startDate
-                    expDateString = moment(expDateIn.date.startDate).format('LL')
+                    //expDateString = moment(expDateIn.date.startDate).format('LL')
                 }
                 //aggiungo la scadenza all'oggetto della dispensa
                 newPantryElement.expDate = expDate
             }
-            console.log(newPantryElement)
-            console.log(expDateString)
-            conv.ask(`Ok, poi?`)
             return (newDBElement(pantryId, newPantryElement))
             .then(()=>{
                 conv.ask(`Ok, poi?`)
