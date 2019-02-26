@@ -19,7 +19,6 @@ export const newDBElement = (pantryId:string, element:any) => {
 export const getExpiringElements = (pantryId:string) => {
     let expElements:Array<any> = []
     const pantryRef = db.collection('pantries').doc(`${pantryId}`).collection('foods')
-    console.log(moment().add(1, 'days').format('LL'))
     
     return pantryRef.where('expDate', '==', moment().format('LL')).get()
     .then((snapshot:any) => {
@@ -41,6 +40,25 @@ export const getExpiringElements = (pantryId:string) => {
         return expElements
     })
     
+}
+
+export const removeElement = (pantryId:string, elementName:string) => {
+    const pantryRef = db.collection('pantries').doc(`${pantryId}`).collection('foods')
+    return pantryRef.where('name', '==', elementName).get()
+    .then((snapshot:any) => {
+        console.log(snapshot)
+        if(snapshot.empty) {
+            return false
+        }
+        let promises:Array<Promise<any>> = []
+        snapshot.forEach((doc:any)=>{
+            promises.push(doc.ref.delete())
+            
+        })
+        return Promise.all(promises).then(() => {
+            return true
+        })
+    })
 }
 
 export const newUser = (user:any) => {
